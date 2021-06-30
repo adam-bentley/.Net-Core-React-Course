@@ -47,14 +47,12 @@ namespace API.Controllers
         {
             if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
             {
-                ModelState.AddModelError("email", "Email is taken");
-                return ValidationProblem(ModelState);
+                return BadRequest("Email taken");
             }
 
             if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
             {
-                ModelState.AddModelError("username", "Username is taken");
-                return ValidationProblem(ModelState);
+                return BadRequest("Username taken");
             }
 
             AppUser user = new()
@@ -81,7 +79,6 @@ namespace API.Controllers
             var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
 
             return CreateUser(user);
-
         }
 
         private UserDto CreateUser(AppUser user)
