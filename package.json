@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "@types/uuid": "^8.3.0"
+  },
+  "dependencies": {
+    "react-cropper": "^2.1.8"
   }
 }
