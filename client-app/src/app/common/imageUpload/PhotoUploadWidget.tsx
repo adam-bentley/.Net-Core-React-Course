@@ -3,15 +3,21 @@ import { useEffect } from 'react';
 import { useState } from 'react'
 import { Button, Grid, Header } from 'semantic-ui-react'
 import PhotoWidgetCropper from './PhotoWidgetCropper';
-import PhotoWidgetDropzone from './PhotoWidgetDropzone'
+import PhotoWidgetDropzone from './PhotoWidgetDropzone';
 
-export default function PhotoUploadWidget() {
+interface Props
+{
+    loading: boolean;
+    uploadPhoto: (file: Blob) => void;
+}
+
+export default function PhotoUploadWidget({loading, uploadPhoto} : Props) {
     const [files, setFiles] = useState<any>([]);
     const [cropper, setCropper] = useState<Cropper>();
 
     function onCrop() {
         if (cropper) {
-            cropper.getCroppedCanvas().toBlob(blob => console.log(blob!));
+            cropper.getCroppedCanvas().toBlob(blob => uploadPhoto(blob!));
         }
     }
 
@@ -38,13 +44,14 @@ export default function PhotoUploadWidget() {
             <Grid.Column width={1} />
             <Grid.Column width={4}>
                 <Header sub color='teal' content='Step 3- Preview and Upload' />
+                { files && files.length > 0 &&
                 <Fragment>
-                    <div className='img-prview' style={{ minHeight: 200, overflow: 'hidden' }} />
+                    <div className='img-preview' style={{ minHeight: 200, overflow: 'hidden' }} />
                     <Button.Group widths={2}>
-                        <Button onClick={onCrop} positive icon='check' />
-                        <Button onClick={() => setFiles([])} positive icon='close' />
+                        <Button onClick={onCrop} loading={loading} positive icon='check' />
+                        <Button onClick={() => setFiles([])} disabled={loading} positive icon='close' />
                     </Button.Group>
-                </Fragment>
+                </Fragment>}
             </Grid.Column>
         </Grid>
     )
