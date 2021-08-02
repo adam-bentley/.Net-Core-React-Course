@@ -18,7 +18,7 @@ export default observer(function ProfileEditForm({setEditMode}: Props)
 
     return (
         <Formik
-            initialValues={{displayname: profile?.displayName, bio: profile?.bio}}
+            initialValues={{displayName: profile?.displayName, bio: profile?.bio}}
             onSubmit={values => 
             {
                 updateProfile(values).then(() =>
@@ -27,13 +27,13 @@ export default observer(function ProfileEditForm({setEditMode}: Props)
                 })
             }}
             validationSchema={Yup.object({
-                displayname: Yup.string().required()
+                displayName: Yup.string().required()
             })}
         >
             {({isSubmitting, isValid, dirty}) =>
             (
                 <Form className='ui form'>
-                    <MyTextInput placeholder='Display name' name='displayname' />
+                    <MyTextInput placeholder='Display name' name='displayName' />
                     <MyTextArea rows={3} placeholder='Add your bio' name='bio' />
                     <Button
                         positive
