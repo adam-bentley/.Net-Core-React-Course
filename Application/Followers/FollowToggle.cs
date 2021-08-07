@@ -60,8 +60,4 @@ namespace Application.Followers
 
 
     }
-
-    public class UserAcessor
-    {
-    }
 }
